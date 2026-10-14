@@ -1,0 +1,7 @@
+plugins { id 'com.android.application' }
+android {
+ namespace 'com.deganiasprayers.kiosk'
+ compileSdk 35
+ defaultConfig { applicationId 'com.deganiasprayers.kiosk'; minSdk 28; targetSdk 32; versionCode 1; versionName '0.1-test' }
+ compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
+}
