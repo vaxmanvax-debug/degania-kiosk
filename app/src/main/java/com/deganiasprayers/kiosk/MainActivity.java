@@ -15,7 +15,7 @@ import javax.crypto.spec.PBEKeySpec;
 import android.util.Base64;
 
 public final class MainActivity extends Activity {
- private static final String HOME="https://deganiasprayers.com/";
+ private static final String HOME="https://degania-sprayers.com/";
  private WebView web;
  private boolean dialogOpen=false, admin=false;
  private final long[] taps=new long[5];
@@ -56,7 +56,7 @@ public final class MainActivity extends Activity {
  }
  private boolean allowed(Uri u) {
   String h=u.getHost();
-  return "https".equalsIgnoreCase(u.getScheme()) && h!=null && (h.equalsIgnoreCase("deganiasprayers.com")||h.equalsIgnoreCase("www.deganiasprayers.com")) && (u.getPort()==-1);
+  return "https".equalsIgnoreCase(u.getScheme()) && h!=null && (h.equalsIgnoreCase("degania-sprayers.com")||h.equalsIgnoreCase("www.degania-sprayers.com")) && (u.getPort()==-1);
  }
  private void hideBars(){getWindow().getDecorView().setSystemUiVisibility(5894|1024|512);}
  @Override public void onWindowFocusChanged(boolean f){super.onWindowFocusChanged(f);if(f&&!admin)hideBars();}

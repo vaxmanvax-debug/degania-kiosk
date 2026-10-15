@@ -33,8 +33,8 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           cp app/build/outputs/apk/debug/app-debug.apk DeganiaKiosk.apk
-          if gh release view v0.1.0-test >/dev/null 2>&1; then
-            gh release upload v0.1.0-test DeganiaKiosk.apk --clobber
+          if gh release view v0.2.0-test >/dev/null 2>&1; then
+            gh release upload v0.2.0-test DeganiaKiosk.apk --clobber
           else
-            gh release create v0.1.0-test DeganiaKiosk.apk --target "$GITHUB_SHA" --title "Degania Kiosk 0.1 (Android test)" --notes "Test Android APK for deganiasprayers.com. First launch asks you to set a 4-8 digit PIN. Five fast taps show the exit PIN dialog. Device Owner setup is required for strict Android system lock-down." --prerelease
+            gh release create v0.2.0-test DeganiaKiosk.apk --target "$GITHUB_SHA" --title "Degania Kiosk 0.2 (Android test)" --notes "Test Android APK for degania-sprayers.com. First launch asks you to set a 4-8 digit PIN. Five fast taps show the exit PIN dialog. Device Owner setup is required for strict Android system lock-down." --prerelease
           fi
