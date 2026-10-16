@@ -15,26 +15,30 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
-      - name: Android SDK
-        uses: android-actions/setup-android@v3
+      - uses: android-actions/setup-android@v3
         with:
           packages: 'platform-tools platforms;android-35 build-tools;35.0.0'
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.9'
       - run: gradle --no-daemon :app:assembleDebug
+      - name: Verify APK signature and package
+        run: |
+          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --verbose --print-certs app/build/outputs/apk/debug/app-debug.apk
+          "$ANDROID_HOME/build-tools/35.0.0/aapt" dump badging app/build/outputs/apk/debug/app-debug.apk | head -20
+          unzip -t app/build/outputs/apk/debug/app-debug.apk | tail -1
       - uses: actions/upload-artifact@v4
         with:
-          name: Degania-Kiosk-APK
+          name: Degania-Kiosk-v0.3-APK
           path: app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
-      - name: Publish direct-download test APK
+      - name: Publish direct download APK
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          cp app/build/outputs/apk/debug/app-debug.apk DeganiaKiosk.apk
-          if gh release view v0.2.0-test >/dev/null 2>&1; then
-            gh release upload v0.2.0-test DeganiaKiosk.apk --clobber
+          cp app/build/outputs/apk/debug/app-debug.apk DeganiaKiosk_v0.3.apk
+          if gh release view v0.3.0-test >/dev/null 2>&1; then
+            gh release upload v0.3.0-test DeganiaKiosk_v0.3.apk --clobber
           else
-            gh release create v0.2.0-test DeganiaKiosk.apk --target "$GITHUB_SHA" --title "Degania Kiosk 0.2 (Android test)" --notes "Test Android APK for degania-sprayers.com. First launch asks you to set a 4-8 digit PIN. Five fast taps show the exit PIN dialog. Device Owner setup is required for strict Android system lock-down." --prerelease
+            gh release create v0.3.0-test DeganiaKiosk_v0.3.apk --target "$GITHUB_SHA" --title "Degania Kiosk v0.3 — Android test" --notes "Correct website: https://degania-sprayers.com/. PIN setup on first run. Five quick taps open administrator PIN. Android kiosk system lock requires Device Owner provisioning. PDFs not yet supported." --prerelease
           fi
